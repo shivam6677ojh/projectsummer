@@ -110,7 +110,8 @@ function App() {
   if (showLoader) {
     return (
       <div className="app-loader">
-        <span className="loader-text">Welcome</span>
+
+        <span className="loader-subtitle loader-text">Welcome to Train Management System</span>
       </div>
     );
   }

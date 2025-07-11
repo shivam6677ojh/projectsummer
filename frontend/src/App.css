@@ -42,7 +42,8 @@
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 9999;
-  background: linear-gradient(135deg, #ff6f61 0%, #6a82fb 100%);
+  background: linear-gradient(135deg, #060606 0%, #606a9d 100%);
+  /* background: black; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,6 +61,15 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+.loader-subtitle {
+  font-size: 2.9rem;
+  font-weight: 500;
+  color: #fff;
+  margin-top: 18px;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-shadow: 1px 2px 8px rgba(0,0,0,0.12);
 }
 
 /* UI polish improvements */
@@ -508,16 +518,28 @@ form button:hover {
 .login-form input,
 .register-form input {
   width: 100%;
-  max-width: 340px;
+  max-width: 260px;
   margin: 0 auto 0 auto;
   display: block;
+  padding: 0 6px;
+  height: 18px !important;
+  line-height: 1 !important;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+.login-form,
+.register-form {
+  min-width: 360px;
+  max-width: 90vw;
 }
 .login-form .form-btn,
 .register-form .form-btn {
-  max-width: 340px;
+  max-width: 260px;
   margin: 18px auto 0 auto;
   display: block;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .login-form .error,
 .register-form .error,
@@ -525,7 +547,7 @@ form button:hover {
 .register-form .field-error {
   text-align: center;
   width: 100%;
-  max-width: 340px;
+  max-width: 260px;
   margin: 0 auto;
   display: block;
 }
@@ -540,7 +562,7 @@ form button:hover {
 }
 .login-form .form-btn {
   width: 100%;
-  margin-left: 0;
+  /* margin-left: 0; */
 }
 .login-form .error {
   color: #d32f2f;

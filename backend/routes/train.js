@@ -12,6 +12,9 @@ router.post('/add', async (req, res) => {
     if (!username) {
       return res.status(400).json({ error: 'Username is required' });
     }
+    if (!newTrain.name || typeof newTrain.name !== 'string' || !newTrain.name.trim()) {
+      return res.status(400).json({ error: 'Train name is required' });
+    }
 
     // Try to assign a platform
     const { platform, delayed } = await assignPlatform(Train, newTrain, username);

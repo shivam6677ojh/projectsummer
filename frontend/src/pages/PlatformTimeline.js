@@ -37,6 +37,7 @@ const PlatformTimeline = () => {
                 {platforms[platform].map((train) => (
                   <li key={train.id}>
                     <span className="train-id">{train.id}</span>
+                    <span className="train-name" style={{ fontWeight: 600, marginLeft: 8 }}>{train.name}</span>
                     <span className="train-time">{train.arrival} - {train.departure}</span>
                     <span className={`train-status ${train.status === 'Delayed' ? 'delayed' : 'on-time'}`}>{train.status}</span>
                   </li>

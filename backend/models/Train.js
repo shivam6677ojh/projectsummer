@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const TrainSchema = new mongoose.Schema({
   id: { type: String, required: true },
+  name: { type: String, required: true }, // Train name
   arrival: { type: String, required: true }, // Format: 'HH:mm'
   departure: { type: String, required: true }, // Format: 'HH:mm'
   priority: { type: Number, required: true }, // 1: Emergency, 2: Express, 3: Local

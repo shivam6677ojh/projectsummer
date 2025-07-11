@@ -6,6 +6,7 @@ const TrainTable = ({ trains }) => {
       <thead>
         <tr>
           <th>ID</th>
+          <th>Name</th>
           <th>Arrival</th>
           <th>Departure</th>
           <th>Priority</th>
@@ -18,6 +19,7 @@ const TrainTable = ({ trains }) => {
           trains.map((train) => (
             <tr key={train.id}>
               <td>{train.id}</td>
+              <td>{train.name}</td>
               <td>{train.arrival}</td>
               <td>{train.departure}</td>
               <td>{train.priority}</td>
@@ -27,7 +29,7 @@ const TrainTable = ({ trains }) => {
           ))
         ) : (
           <tr>
-            <td colSpan="6">No trains found.</td>
+            <td colSpan="7">No trains found.</td>
           </tr>
         )}
       </tbody>
