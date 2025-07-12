@@ -3,7 +3,7 @@ function isOverlap(aStart, aEnd, bStart, bEnd) {
   return aStart < bEnd && bStart < aEnd;
 }
 
-// Priority: 1 (Emergency), 2 (Express), 3 (Local)
+
 function comparePriority(a, b) {
   return a.priority - b.priority;
 }
