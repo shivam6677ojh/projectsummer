@@ -2,12 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Feedback = require('../models/Feedback');
 
-// Test endpoint to check if server is running
+
 router.get('/test', (req, res) => {
   res.json({ message: 'Feedback server is running!' });
 });
 
-// POST /feedback - Submit new feedback
 router.post('/', async (req, res) => {
   try {
     console.log('Received feedback request:', req.body);
@@ -30,7 +29,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET /feedback - Get all feedback (for admin purposes)
+
 router.get('/', async (req, res) => {
   try {
     const feedback = await Feedback.find().sort({ timestamp: -1 });

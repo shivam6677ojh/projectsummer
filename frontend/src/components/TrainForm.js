@@ -7,7 +7,6 @@ const TrainForm = ({ onSubmit }) => {
     arrival: '',
     departure: '',
     priority: 2,
-    platform: 1,
     status: 'On Time',
   });
 
@@ -38,7 +37,6 @@ const TrainForm = ({ onSubmit }) => {
         <option value={9}>Suburban Local</option>
         <option value={10}>Goods Train</option>
       </select>
-      <input name="platform" type="number" placeholder="Platform" value={form.platform} onChange={handleChange} required />
       <select name="status" value={form.status} onChange={handleChange} required>
         <option value="On Time">On Time</option>
         <option value="Delayed">Delayed</option>

@@ -36,6 +36,7 @@ const Dashboard = () => {
       </p>
       <TrainTable trains={trains} />
     </div>
+    
   );
 };
 

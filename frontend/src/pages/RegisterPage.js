@@ -8,6 +8,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
     password: '',
     confirmPassword: ''
   });
+  
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
   const [fadeIn, setFadeIn] = useState(false);

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import AddTrain from './pages/AddTrain';
-import DelayedTrains from './pages/DelayedTrains';
-import PlatformTimeline from './pages/PlatformTimeline';
-import LoginPage from './pages/LoginPage';
-import LandingPage from './pages/LandingPage';
-import RegisterPage from './pages/RegisterPage';
+import Dashboard from './pages/Dashboard.js';
+import AddTrain from './pages/AddTrain.js';
+import DelayedTrains from './pages/DelayedTrains.js';
+import PlatformTimeline from './pages/PlatformTimeline.js';
+import LoginPage from './pages/LoginPage.js';
+import LandingPage from './pages/LandingPage.js';
+import RegisterPage from './pages/RegisterPage.js';
+
 import './App.css';
 import FeedbackPage from './pages/FeedbackPage';
 
@@ -110,7 +111,6 @@ function App() {
   if (showLoader) {
     return (
       <div className="app-loader">
-
         <span className="loader-subtitle loader-text">Welcome to Train Management System</span>
       </div>
     );
