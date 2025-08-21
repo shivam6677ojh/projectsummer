@@ -39,7 +39,7 @@ const TrainForm = ({ onSubmit }) => {
       </select>
       <select name="status" value={form.status} onChange={handleChange} required>
         <option value="On Time">On Time</option>
-        <option value="Delayed">Delayed</option>
+        {/* <option value="Delayed">Delayed</option> */}
       </select>
       <button className="form-btn" type="submit">Add Train</button>
     </form>

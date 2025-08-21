@@ -102,3 +102,27 @@ export const fetchPlatforms = async () => {
   }
 };
 
+export const markTrainDelayed = async (trainId) => {
+  const username = getUsername();
+  console.log('Marking train as delayed for user:', username, trainId);
+  try {
+    const res = await fetch(`${API_BASE}/train/reschedule/${trainId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-username': username
+      },
+      body: JSON.stringify({ status: 'Delayed', username }),
+    });
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const data = await res.json();
+    console.log('Marked train as delayed:', data);
+    return data;
+  } catch (error) {
+    console.error('Error marking train as delayed:', error);
+    throw error;
+  }
+};
+

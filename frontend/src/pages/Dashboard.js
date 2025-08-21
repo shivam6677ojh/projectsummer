@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TrainTable from '../components/TrainTable';
-import { fetchTrains } from '../utils/api';
+import { fetchTrains, markTrainDelayed, deleteTrain } from '../utils/api';
 
 const Dashboard = () => {
   const [trains, setTrains] = useState([]);
@@ -24,6 +24,29 @@ const Dashboard = () => {
     getTrains();
   }, []);
 
+  const handleMarkDelayed = async (trainId) => {
+    try {
+      await markTrainDelayed(trainId);
+      // Refresh train list
+      const data = await fetchTrains();
+      setTrains(data);
+    } catch (err) {
+      alert('Failed to mark train as delayed');
+    }
+  };
+
+  const handleDelete = async (trainId) => {
+    if (!window.confirm('Are you sure you want to delete this train?')) return;
+    try {
+      await deleteTrain(trainId);
+      // Refresh train list
+      const data = await fetchTrains();
+      setTrains(data);
+    } catch (err) {
+      alert('Failed to delete train');
+    }
+  };
+
   if (loading) return <div className="container">Loading...</div>;
   if (error) return <div className="container error">{error}</div>;
 
@@ -34,7 +57,7 @@ const Dashboard = () => {
         Welcome back, {localStorage.getItem('currentUser')}! 
         You have {trains.length} train(s) in your schedule.
       </p>
-      <TrainTable trains={trains} />
+      <TrainTable trains={trains} onMarkDelayed={handleMarkDelayed} onDelete={handleDelete} />
     </div>
     
   );
