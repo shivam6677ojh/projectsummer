@@ -7,25 +7,46 @@ import PlatformTimeline from './pages/PlatformTimeline.js';
 import LoginPage from './pages/LoginPage.js';
 import LandingPage from './pages/LandingPage.js';
 import RegisterPage from './pages/RegisterPage.js';
-
 import './App.css';
 import FeedbackPage from './pages/FeedbackPage';
+import { logoutUser, getCurrentUserProfile } from './utils/api';
 
 function AppContent() {
   const navigate = useNavigate();
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     document.body.className = theme === 'dark' ? 'dark-mode' : '';
     localStorage.setItem('theme', theme);
+    
+    // Get current user profile
+    const loadUserProfile = async () => {
+      try {
+        const user = await getCurrentUserProfile();
+        setCurrentUser(user);
+      } catch (error) {
+        console.error('Failed to load user profile:', error);
+        // If token is invalid, redirect to login
+        handleLogout();
+      }
+    };
+    
+    loadUserProfile();
   }, [theme]);
 
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
-  const handleLogout = () => {
-    localStorage.removeItem('auth');
-    localStorage.removeItem('currentUser');
-    window.location.reload(); // Force reload to go back to landing
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('currentUser');
+      window.location.reload(); // Force reload to go back to landing
+    }
   };
 
   return (
@@ -45,8 +66,9 @@ function AppContent() {
           <div className="user-info">
             <div className="user-avatar">👤</div>
             <div className="user-details">
-              <h3>{localStorage.getItem('currentUser') || 'User'}</h3>
+              <h3>{currentUser?.username || 'User'}</h3>
               <p>Logged In</p>
+              {currentUser?.email && <p className="user-email">{currentUser.email}</p>}
             </div>
           </div>
           
@@ -82,29 +104,27 @@ function App() {
 
   useEffect(() => {
     const timer = setTimeout(() => setShowLoader(false), 2200);
+    
+    // Check if user is authenticated on app load
+    const token = localStorage.getItem('authToken');
+    const user = localStorage.getItem('currentUser');
+    
+    if (token && user) {
+      setIsAuthenticated(true);
+    }
+    
     return () => clearTimeout(timer);
   }, []);
 
-  const handleLogin = (username, password) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(u => u.username === username && u.password === password);
-    if (user) {
-      setIsAuthenticated(true);
-      localStorage.setItem('auth', 'true');
-      localStorage.setItem('currentUser', username);
-      return true;
-    }
-    return false;
+  const handleLogin = (username, token) => {
+    setIsAuthenticated(true);
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('currentUser', username);
   };
 
   const handleRegister = (userData) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const existingUser = users.find(u => u.username === userData.username || u.email === userData.email);
-    if (existingUser) {
-      return { success: false, message: 'Username or email already exists.' };
-    }
-    users.push(userData);
-    localStorage.setItem('users', JSON.stringify(users));
+    // Registration is now handled by the backend
+    // This function is kept for compatibility but should be updated in RegisterPage
     return { success: true, message: 'Registration successful! Please login.' };
   };
 
@@ -121,8 +141,11 @@ function App() {
       return <LandingPage onNavigate={setCurrentPage} />;
     } else if (currentPage === 'register') {
       return <RegisterPage onRegister={handleRegister} onNavigate={setCurrentPage} />;
-    } else {
+    } else if (currentPage === 'login') {
       return <LoginPage onLogin={handleLogin} onNavigate={setCurrentPage} />;
+    } else {
+      // Default to landing page
+      return <LandingPage onNavigate={setCurrentPage} />;
     }
   }
 

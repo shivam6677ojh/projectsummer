@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Train = require('../models/Train');
-const { assignPlatform } = require('../utils/scheduler');
+const Train = require('../models/Train.js');
+const auth = require('../middleware/auth');
+const { assignPlatform } = require('../utils/scheduler.js');
 
-router.post('/add', async (req, res) => {
+router.post('/add', auth, async (req, res) => {
   try {
     const newTrain = req.body;
-    const username = req.body.username || req.headers['x-username'];
+    const username = req.user.username;
     
-    if (!username) {
-      return res.status(400).json({ error: 'Username is required' });
-    }
     if (!newTrain.name || typeof newTrain.name !== 'string' || !newTrain.name.trim()) {
       return res.status(400).json({ error: 'Train name is required' });
     }
@@ -23,7 +21,6 @@ router.post('/add', async (req, res) => {
     newTrain.platform = platform;
     newTrain.status = 'On Time';
     newTrain.username = username;
-
 
     if (delayed) {
       await Train.findOneAndUpdate({ id: delayed.id, username }, { status: 'Delayed' });
@@ -41,23 +38,9 @@ router.post('/add', async (req, res) => {
   }
 });
 
-
-router.get('/trains', async (req, res) => {
+router.get('/trains', auth, async (req, res) => {
   try {
-    const username = req.query.username || req.headers['x-username'];
-
-    console.log('GET /trains - Request received');
-    console.log('Query params:', req.query);
-    console.log('Headers:', req.headers);
-    console.log('Username from query:', req.query.username);
-    console.log('Username from headers:', req.headers['x-username']);
-    console.log('Final username:', username);
-
-    if (!username) {
-      console.log('No username provided, returning error');
-      return res.status(400).json({ error: 'Username is required' });
-    }
-
+    const username = req.user.username;
     console.log(`Fetching trains for user: ${username}`);
     const trains = await Train.find({ username });
     console.log(`Found ${trains.length} trains for user ${username}:`, trains);
@@ -68,14 +51,9 @@ router.get('/trains', async (req, res) => {
   }
 });
 
-router.delete('/train/:id', async (req, res) => {
+router.delete('/train/:id', auth, async (req, res) => {
   try {
-    const username = req.query.username || req.headers['x-username'];
-
-    if (!username) {
-      return res.status(400).json({ error: 'Username is required' });
-    }
-
+    const username = req.user.username;
     const result = await Train.deleteOne({ id: req.params.id, username });
     res.json(result);
   } catch (err) {
@@ -83,14 +61,9 @@ router.delete('/train/:id', async (req, res) => {
   }
 });
 
-router.get('/delayed', async (req, res) => {
+router.get('/delayed', auth, async (req, res) => {
   try {
-    const username = req.query.username || req.headers['x-username'];
-
-    if (!username) {
-      return res.status(400).json({ error: 'Username is required' });
-    }
-
+    const username = req.user.username;
     const delayed = await Train.find({ status: 'Delayed', username });
     res.json(delayed);
   } catch (err) {
@@ -98,14 +71,9 @@ router.get('/delayed', async (req, res) => {
   }
 });
 
-router.put('/train/reschedule/:id', async (req, res) => {
+router.put('/train/reschedule/:id', auth, async (req, res) => {
   try {
-    const username = req.body.username || req.headers['x-username'];
-
-    if (!username) {
-      return res.status(400).json({ error: 'Username is required' });
-    }
-
+    const username = req.user.username;
     const updated = await Train.findOneAndUpdate(
       { id: req.params.id, username },
       req.body,
@@ -117,14 +85,9 @@ router.put('/train/reschedule/:id', async (req, res) => {
   }
 });
 
-router.get('/platforms', async (req, res) => {
+router.get('/platforms', auth, async (req, res) => {
   try {
-    const username = req.query.username || req.headers['x-username'];
-
-    if (!username) {
-      return res.status(400).json({ error: 'Username is required' });
-    }
-
+    const username = req.user.username;
     const trains = await Train.find({ username });
     const platforms = {};
     trains.forEach(train => {

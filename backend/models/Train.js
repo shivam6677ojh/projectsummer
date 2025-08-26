@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 const TrainSchema = new mongoose.Schema({
-  id: { type: String, required: true },
+  id: { 
+    type: String, required: true 
+  },
   name: { type: String, required: true }, 
   arrival: { type: String, required: true },
   departure: { type: String, required: true }, 
@@ -9,7 +11,8 @@ const TrainSchema = new mongoose.Schema({
   platform: { type: Number, required: true },
   status: { type: String, enum: ['On Time', 'Delayed'], default: 'On Time' },
   username: { type: String, required: true }
-  }
+  },
+  {timestamps: true}
 );
 
 

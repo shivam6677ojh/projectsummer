@@ -1,21 +1,156 @@
 // Placeholder for API utility functions
 
-const API_BASE = 'http://localhost:5000';
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
 
-const getUsername = () => {
-  const username = localStorage.getItem('currentUser');
-  console.log('Current username:', username);
-  return username;
+console.log('API Base URL:', API_BASE); // Debug log
+
+// Get auth token from localStorage
+const getAuthToken = () => {
+  return localStorage.getItem('authToken');
 };
 
-export const fetchTrains = async () => {
-  const username = getUsername();
-  console.log('Fetching trains for user:', username);
+// Get current user from localStorage
+const getCurrentUser = () => {
+  const userStr = localStorage.getItem('currentUser');
+  return userStr ? JSON.parse(userStr) : null;
+};
+
+// Set auth headers for requests
+const getAuthHeaders = () => {
+  const token = getAuthToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` })
+  };
+};
+
+// Test API connection
+export const testApiConnection = async () => {
   try {
-    const res = await fetch(`${API_BASE}/trains?username=${username}`);
+    console.log('Testing API connection to:', API_BASE);
+    const res = await fetch(`${API_BASE}/`);
+    const data = await res.json();
+    console.log('API test response:', data);
+    return data;
+  } catch (error) {
+    console.error('API connection test failed:', error);
+    throw error;
+  }
+};
+
+// Authentication API calls
+export const loginUser = async (username, password) => {
+  try {
+    console.log('Attempting login for user:', username);
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    
+    console.log('Login response status:', res.status);
+    
     if (!res.ok) {
+      const error = await res.json();
+      console.error('Login error response:', error);
+      throw new Error(error.message || 'Login failed');
+    }
+    
+    const data = await res.json();
+    console.log('Login successful:', data);
+    localStorage.setItem('authToken', data.token);
+    localStorage.setItem('currentUser', JSON.stringify(data.user));
+    return data;
+  } catch (error) {
+    console.error('Login error:', error);
+    throw error;
+  }
+};
+
+export const registerUser = async (username, email, password) => {
+  try {
+    console.log('Attempting registration for user:', username);
+    const res = await fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, email, password }),
+    });
+    
+    console.log('Registration response status:', res.status);
+    
+    if (!res.ok) {
+      const error = await res.json();
+      console.error('Registration error response:', error);
+      throw new Error(error.message || 'Registration failed');
+    }
+    
+    const data = await res.json();
+    console.log('Registration successful:', data);
+    localStorage.setItem('authToken', data.token);
+    localStorage.setItem('currentUser', JSON.stringify(data.user));
+    return data;
+  } catch (error) {
+    console.error('Registration error:', error);
+    throw error;
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const token = getAuthToken();
+    if (token) {
+      await fetch(`${API_BASE}/auth/logout`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+      });
+    }
+  } catch (error) {
+    console.error('Logout error:', error);
+  } finally {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('currentUser');
+  }
+};
+
+export const getCurrentUserProfile = async () => {
+  try {
+    const res = await fetch(`${API_BASE}/auth/me`, {
+      headers: getAuthHeaders(),
+    });
+    
+    if (!res.ok) {
+      throw new Error('Failed to get user profile');
+    }
+    
+    const data = await res.json();
+    return data.user;
+  } catch (error) {
+    console.error('Get user profile error:', error);
+    throw error;
+  }
+};
+
+// Train API calls
+export const fetchTrains = async () => {
+  try {
+    const res = await fetch(`${API_BASE}/trains`, {
+      headers: getAuthHeaders(),
+    });
+    
+    if (!res.ok) {
+      if (res.status === 401) {
+        // Token expired or invalid
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+        throw new Error('Authentication required');
+      }
       throw new Error(`HTTP error! status: ${res.status}`);
     }
+    
     const data = await res.json();
     console.log('Fetched trains:', data);
     return data;
@@ -26,20 +161,22 @@ export const fetchTrains = async () => {
 };
 
 export const addTrain = async (train) => {
-  const username = getUsername();
-  console.log('Adding train for user:', username, train);
   try {
     const res = await fetch(`${API_BASE}/add`, {
       method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'x-username': username
-      },
-      body: JSON.stringify({ ...train, username }),
+      headers: getAuthHeaders(),
+      body: JSON.stringify(train),
     });
+    
     if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+        throw new Error('Authentication required');
+      }
       throw new Error(`HTTP error! status: ${res.status}`);
     }
+    
     const data = await res.json();
     console.log('Added train:', data);
     return data;
@@ -50,15 +187,21 @@ export const addTrain = async (train) => {
 };
 
 export const deleteTrain = async (trainId) => {
-  const username = getUsername();
-  console.log('Deleting train for user:', username, trainId);
   try {
-    const res = await fetch(`${API_BASE}/train/${trainId}?username=${username}`, {
+    const res = await fetch(`${API_BASE}/train/${trainId}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
+    
     if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+        throw new Error('Authentication required');
+      }
       throw new Error(`HTTP error! status: ${res.status}`);
     }
+    
     const data = await res.json();
     console.log('Deleted train:', data);
     return data;
@@ -69,13 +212,20 @@ export const deleteTrain = async (trainId) => {
 };
 
 export const fetchDelayedTrains = async () => {
-  const username = getUsername();
-  console.log('Fetching delayed trains for user:', username);
   try {
-    const res = await fetch(`${API_BASE}/delayed?username=${username}`);
+    const res = await fetch(`${API_BASE}/delayed`, {
+      headers: getAuthHeaders(),
+    });
+    
     if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+        throw new Error('Authentication required');
+      }
       throw new Error(`HTTP error! status: ${res.status}`);
     }
+    
     const data = await res.json();
     console.log('Fetched delayed trains:', data);
     return data;
@@ -86,13 +236,20 @@ export const fetchDelayedTrains = async () => {
 };
 
 export const fetchPlatforms = async () => {
-  const username = getUsername();
-  console.log('Fetching platforms for user:', username);
   try {
-    const res = await fetch(`${API_BASE}/platforms?username=${username}`);
+    const res = await fetch(`${API_BASE}/platforms`, {
+      headers: getAuthHeaders(),
+    });
+    
     if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+        throw new Error('Authentication required');
+      }
       throw new Error(`HTTP error! status: ${res.status}`);
     }
+    
     const data = await res.json();
     console.log('Fetched platforms:', data);
     return data;
@@ -103,20 +260,22 @@ export const fetchPlatforms = async () => {
 };
 
 export const markTrainDelayed = async (trainId) => {
-  const username = getUsername();
-  console.log('Marking train as delayed for user:', username, trainId);
   try {
     const res = await fetch(`${API_BASE}/train/reschedule/${trainId}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-username': username
-      },
-      body: JSON.stringify({ status: 'Delayed', username }),
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ status: 'Delayed' }),
     });
+    
     if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+        throw new Error('Authentication required');
+      }
       throw new Error(`HTTP error! status: ${res.status}`);
     }
+    
     const data = await res.json();
     console.log('Marked train as delayed:', data);
     return data;

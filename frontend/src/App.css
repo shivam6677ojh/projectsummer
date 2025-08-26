@@ -1132,3 +1132,489 @@ form button:hover {
   0% { opacity: 0; transform: translateY(30px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+
+/* Thunder Login Styles - High specificity to override existing styles */
+.thunder-login-container {
+  min-height: 100vh !important;
+  width: 100vw !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%) !important;
+  position: relative !important;
+  overflow: auto !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  padding: 20px !important;
+}
+
+.thunder-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.lightning-bolt {
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, #FFD700, #FFA500, transparent);
+  opacity: 0;
+  animation: lightning 4s infinite;
+}
+
+.lightning-1 {
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.lightning-2 {
+  left: 50%;
+  animation-delay: 2s;
+}
+
+.lightning-3 {
+  left: 80%;
+  animation-delay: 4s;
+}
+
+@keyframes lightning {
+  0%, 90%, 100% { opacity: 0; }
+  5%, 15% { opacity: 1; }
+  10% { opacity: 0.5; }
+}
+
+.rain-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, transparent, #4a90e2);
+  animation: rain 2s linear infinite;
+}
+
+@keyframes rain {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 20px !important;
+  padding: 40px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  max-width: 400px !important;
+  width: 90% !important;
+  z-index: 10 !important;
+  position: relative !important;
+  transform: translateY(50px) !important;
+  opacity: 0 !important;
+  animation: slideUp 0.8s ease-out forwards !important;
+  /* Debug styles to ensure visibility */
+  min-height: 200px !important;
+  display: block !important;
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-container {
+  margin-bottom: 20px;
+}
+
+.thunder-logo {
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.login-title {
+  color: #FFD700;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+  to { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.3); }
+}
+
+.login-subtitle {
+  color: #b0b0b0;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.login-form {
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.thunder-input {
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.thunder-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.thunder-input:focus {
+  outline: none;
+  border-color: #FFD700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.thunder-input.input-error {
+  border-color: #ff4757;
+  box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  font-size: 18px;
+  color: #FFD700;
+  pointer-events: none;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #FFD700;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.password-toggle:hover {
+  background: rgba(255, 215, 0, 0.1);
+  transform: scale(1.1);
+}
+
+.field-error {
+  color: #ff4757;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: center;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.thunder-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-btn {
+  background: linear-gradient(45deg, #FFD700, #FFA500, #FF4500);
+  color: #000;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+}
+
+.login-btn:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.login-btn.loading {
+  background: linear-gradient(45deg, #666, #888);
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #FFD700;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  color: #ff4757;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 15px;
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+}
+
+.thunder-link, .thunder-back {
+  background: none;
+  border: none;
+  color: #FFD700;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.thunder-link:hover, .thunder-back:hover {
+  background: rgba(255, 215, 0, 0.1);
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.thunder-link:disabled, .thunder-back:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  
+  .login-title {
+    font-size: 2rem;
+  }
+  
+  .thunder-input {
+    padding: 12px 45px 12px 15px;
+    font-size: 14px;
+  }
+  
+  .thunder-btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+  .thunder-login-container {
+    background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+  }
+}
+
+/* Custom Scrollbar Styles */
+.thunder-login-container::-webkit-scrollbar,
+.thunder-register-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.thunder-login-container::-webkit-scrollbar-track,
+.thunder-register-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.thunder-login-container::-webkit-scrollbar-thumb,
+.thunder-register-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #FFD700, #FFA500);
+  border-radius: 4px;
+}
+
+.thunder-login-container::-webkit-scrollbar-thumb:hover,
+.thunder-register-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #FFA500, #FF4500);
+}
+
+/* Firefox scrollbar */
+.thunder-login-container,
+.thunder-register-container {
+  scrollbar-width: thin;
+  scrollbar-color: #FFD700 rgba(255, 255, 255, 0.1);
+}
+
+/* Thunder Register Page Styles */
+.thunder-register-container {
+  min-height: 100vh !important;
+  width: 100vw !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%) !important;
+  position: relative !important;
+  overflow: auto !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  padding: 20px !important;
+}
+
+.register-card {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 20px !important;
+  padding: 40px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  max-width: 450px !important;
+  width: 90% !important;
+  z-index: 10 !important;
+  position: relative !important;
+  transform: translateY(50px) !important;
+  opacity: 0 !important;
+  animation: slideUp 0.8s ease-out forwards !important;
+}
+
+.register-title {
+  color: #FFD700 !important;
+  font-size: 2.5rem !important;
+  font-weight: bold !important;
+  margin: 0 0 10px 0 !important;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5) !important;
+  animation: glow 2s ease-in-out infinite alternate !important;
+}
+
+.register-subtitle {
+  color: #b0b0b0 !important;
+  font-size: 1rem !important;
+  margin: 0 !important;
+}
+
+.thunder-register-btn {
+  width: 100% !important;
+  padding: 15px !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: linear-gradient(45deg, #FFD700, #FFA500, #FF4500) !important;
+  color: #000 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.thunder-register-btn:hover:not(:disabled) {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4) !important;
+}
+
+.thunder-register-btn:active:not(:disabled) {
+  transform: translateY(-1px) !important;
+}
+
+.thunder-register-btn.loading {
+  background: linear-gradient(45deg, #666, #888) !important;
+  cursor: not-allowed !important;
+}
+
+.success-message {
+  background: rgba(76, 175, 80, 0.1) !important;
+  border: 1px solid rgba(76, 175, 80, 0.3) !important;
+  color: #4caf50 !important;
+  padding: 12px !important;
+  border-radius: 8px !important;
+  margin-top: 15px !important;
+  text-align: center !important;
+  animation: slideIn 0.3s ease-out !important;
+}
