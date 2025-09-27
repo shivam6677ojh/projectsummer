@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../App.css';
 
+const API_BASE = process.env.REACT_APP_API_BASE;
+
 const FeedbackPage = ({ theme }) => {
   const [feedback, setFeedback] = useState({
     rating: 5,
@@ -22,9 +24,9 @@ const FeedbackPage = ({ theme }) => {
         timestamp: new Date().toISOString()
       };
 
-      console.log('Submitting feedback:', feedbackData);
+      //console.log('Submitting feedback:', feedbackData);
 
-      const response = await fetch('http://localhost:5000/feedback', {
+      const response = await fetch(`${API_BASE}/feedback`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,12 +34,12 @@ const FeedbackPage = ({ theme }) => {
         body: JSON.stringify(feedbackData),
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
+      //console.log('Response status:', response.status);
+      //console.log('Response ok:', response.ok);
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Success response:', result);
+        //console.log('Success response:', result);
         setMessage('Thank you for your feedback!');
         setFeedback({ rating: 5, category: 'general', comment: '' });
       } else {

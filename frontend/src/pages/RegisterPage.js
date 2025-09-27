@@ -17,7 +17,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
-    console.log('RegisterPage component mounted'); // Debug log
+    //console.log('RegisterPage component mounted'); // Debug log
   }, []);
 
   const validateForm = () => {
@@ -58,7 +58,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
 
     try {
       const response = await registerUser(formData.username, formData.email, formData.password);
-      console.log('Registration successful:', response);
+      //console.log('Registration successful:', response);
       setMessage('Registration successful! Redirecting to login...');
       setTimeout(() => onNavigate('login'), 2000);
     } catch (error) {

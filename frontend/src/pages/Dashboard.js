@@ -10,9 +10,9 @@ const Dashboard = () => {
   useEffect(() => {
     const getTrains = async () => {
       try {
-        console.log('Dashboard: Starting to fetch trains...');
+        //console.log('Dashboard: Starting to fetch trains...');
         const data = await fetchTrains();
-        console.log('Dashboard: Received trains data:', data);
+        //console.log('Dashboard: Received trains data:', data);
         setTrains(data);
       } catch (err) {
         console.error('Dashboard: Error fetching trains:', err);

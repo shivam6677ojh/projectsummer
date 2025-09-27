@@ -9,12 +9,12 @@ const LoginPage = ({ onLogin, theme, onNavigate }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('LoginPage component mounted'); // Debug log
+    //console.log('LoginPage component mounted'); // Debug log
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login form submitted'); // Debug log
+    //console.log('Login form submitted'); // Debug log
     
     if (!username || !password) {
       setError('Username and password are required.');
@@ -26,7 +26,7 @@ const LoginPage = ({ onLogin, theme, onNavigate }) => {
 
     try {
       const response = await loginUser(username, password);
-      console.log('Login successful:', response);
+      //console.log('Login successful:', response);
       onLogin(response.user.username, response.token);
       setError('');
     } catch (error) {

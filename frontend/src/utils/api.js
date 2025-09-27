@@ -3,7 +3,7 @@
 // const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
 const API_BASE = process.env.REACT_APP_API_BASE;
 
-console.log('API Base URL:', API_BASE); // Debug log
+//console.log('API Base URL:', API_BASE); // Debug log
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -28,10 +28,10 @@ const getAuthHeaders = () => {
 // Test API connection
 export const testApiConnection = async () => {
   try {
-    console.log('Testing API connection to:', API_BASE);
+    //console.log('Testing API connection to:', API_BASE);
     const res = await fetch(`${API_BASE}/`);
     const data = await res.json();
-    console.log('API test response:', data);
+    //console.log('API test response:', data);
     return data;
   } catch (error) {
     console.error('API connection test failed:', error);
@@ -42,7 +42,7 @@ export const testApiConnection = async () => {
 // Authentication API calls
 export const loginUser = async (username, password) => {
   try {
-    console.log('Attempting login for user:', username);
+    //console.log('Attempting login for user:', username);
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: {
@@ -51,7 +51,7 @@ export const loginUser = async (username, password) => {
       body: JSON.stringify({ username, password }),
     });
     
-    console.log('Login response status:', res.status);
+    //console.log('Login response status:', res.status);
     
     if (!res.ok) {
       const error = await res.json();
@@ -60,7 +60,7 @@ export const loginUser = async (username, password) => {
     }
     
     const data = await res.json();
-    console.log('Login successful:', data);
+    //console.log('Login successful:', data);
     localStorage.setItem('authToken', data.token);
     localStorage.setItem('currentUser', JSON.stringify(data.user));
     return data;
@@ -72,7 +72,7 @@ export const loginUser = async (username, password) => {
 
 export const registerUser = async (username, email, password) => {
   try {
-    console.log('Attempting registration for user:', username);
+    //console.log('Attempting registration for user:', username);
     const res = await fetch(`${API_BASE}/auth/register`, {
       method: 'POST',
       headers: {
@@ -81,7 +81,7 @@ export const registerUser = async (username, email, password) => {
       body: JSON.stringify({ username, email, password }),
     });
     
-    console.log('Registration response status:', res.status);
+    //console.log('Registration response status:', res.status);
     
     if (!res.ok) {
       const error = await res.json();
@@ -90,7 +90,7 @@ export const registerUser = async (username, email, password) => {
     }
     
     const data = await res.json();
-    console.log('Registration successful:', data);
+    //console.log('Registration successful:', data);
     localStorage.setItem('authToken', data.token);
     localStorage.setItem('currentUser', JSON.stringify(data.user));
     return data;
@@ -153,7 +153,7 @@ export const fetchTrains = async () => {
     }
     
     const data = await res.json();
-    console.log('Fetched trains:', data);
+    //console.log('Fetched trains:', data);
     return data;
   } catch (error) {
     console.error('Error fetching trains:', error);
@@ -179,7 +179,7 @@ export const addTrain = async (train) => {
     }
     
     const data = await res.json();
-    console.log('Added train:', data);
+    //console.log('Added train:', data);
     return data;
   } catch (error) {
     console.error('Error adding train:', error);
@@ -204,7 +204,7 @@ export const deleteTrain = async (trainId) => {
     }
     
     const data = await res.json();
-    console.log('Deleted train:', data);
+    //console.log('Deleted train:', data);
     return data;
   } catch (error) {
     console.error('Error deleting train:', error);
@@ -228,7 +228,7 @@ export const fetchDelayedTrains = async () => {
     }
     
     const data = await res.json();
-    console.log('Fetched delayed trains:', data);
+    //console.log('Fetched delayed trains:', data);
     return data;
   } catch (error) {
     console.error('Error fetching delayed trains:', error);
@@ -252,7 +252,7 @@ export const fetchPlatforms = async () => {
     }
     
     const data = await res.json();
-    console.log('Fetched platforms:', data);
+    //console.log('Fetched platforms:', data);
     return data;
   } catch (error) {
     console.error('Error fetching platforms:', error);
@@ -278,7 +278,7 @@ export const markTrainDelayed = async (trainId) => {
     }
     
     const data = await res.json();
-    console.log('Marked train as delayed:', data);
+    //console.log('Marked train as delayed:', data);
     return data;
   } catch (error) {
     console.error('Error marking train as delayed:', error);
