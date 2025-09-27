@@ -63,7 +63,7 @@ const LoginPage = ({ onLogin, theme, onNavigate }) => {
         margin: 'auto'
       }}>
         <h1 style={{ color: '#FFD700', fontSize: '2.5rem', margin: '0 0 10px 0', textAlign: 'center' }}>
-          ⚡ Thunder Login ⚡
+          ⚡ LT Login ⚡
         </h1>
         <p style={{ color: '#b0b0b0', fontSize: '1rem', margin: '0 0 20px 0', textAlign: 'center' }}>
           Power up your train management experience

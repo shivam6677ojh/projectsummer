@@ -11,7 +11,8 @@ const TrainForm = ({ onSubmit }) => {
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: name === 'priority' ? Number(value) : value });
   };
 
   const handleSubmit = (e) => {

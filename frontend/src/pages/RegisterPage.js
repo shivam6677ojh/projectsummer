@@ -117,7 +117,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
             </svg>
           </div>
           <h1 style={{ color: '#FFD700', fontSize: '2.5rem', margin: '0 0 10px 0' }}>
-            ⚡ Thunder Register ⚡
+            ⚡ LT Register ⚡
           </h1>
           <p style={{ color: '#b0b0b0', fontSize: '1rem', margin: 0 }}>
             Join the thunder-powered train management system
@@ -138,7 +138,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
                 border: errors.username ? '2px solid #ff4757' : '2px solid rgba(255, 255, 255, 0.2)',
                 borderRadius: '12px',
                 background: 'rgba(255, 255, 255, 0.1)',
-                color: '#fff',
+                color: 'black',
                 fontSize: '16px',
                 marginBottom: '5px',
                 boxSizing: 'border-box'
@@ -166,7 +166,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
                 border: errors.email ? '2px solid #ff4757' : '2px solid rgba(255, 255, 255, 0.2)',
                 borderRadius: '12px',
                 background: 'rgba(255, 255, 255, 0.1)',
-                color: '#fff',
+                color: 'black',
                 fontSize: '16px',
                 marginBottom: '5px',
                 boxSizing: 'border-box'
@@ -194,7 +194,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
                   border: errors.password ? '2px solid #ff4757' : '2px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '12px',
                   background: 'rgba(255, 255, 255, 0.1)',
-                  color: '#fff',
+                  color: 'black',
                   fontSize: '16px',
                   marginBottom: '5px',
                   boxSizing: 'border-box'
@@ -218,7 +218,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
                   padding: '5px'
                 }}
               >
-                {showPassword ? '🙈' : '👁️'}
+                {showPassword ? '👁️' : '🙈'}
               </button>
             </div>
             {errors.password && (
@@ -242,7 +242,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
                   border: errors.confirmPassword ? '2px solid #ff4757' : '2px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '12px',
                   background: 'rgba(255, 255, 255, 0.1)',
-                  color: '#fff',
+                  color: 'black',
                   fontSize: '16px',
                   marginBottom: '5px',
                   boxSizing: 'border-box'
@@ -266,7 +266,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
                   padding: '5px'
                 }}
               >
-                {showConfirmPassword ? '🙈' : '👁️'}
+                {showConfirmPassword ? '👁️' : '🙈'}
               </button>
             </div>
             {errors.confirmPassword && (
@@ -293,7 +293,7 @@ const RegisterPage = ({ onRegister, onNavigate, theme }) => {
               opacity: loading ? 0.7 : 1
             }}
           >
-            {loading ? '⚡ Creating Account...' : '⚡ Thunder Register ⚡'}
+            {loading ? '⚡ Creating Account...' : '⚡ Register ⚡'}
           </button>
 
           {message && (
