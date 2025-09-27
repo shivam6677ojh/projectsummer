@@ -1,6 +1,7 @@
 // Placeholder for API utility functions
 
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
+// const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
+const API_BASE = process.env.REACT_APP_API_BASE;
 
 console.log('API Base URL:', API_BASE); // Debug log
 

@@ -4,11 +4,26 @@ const cors = require('cors');
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL,  // deployed frontend URL (Vercel)
+  'http://localhost:3000'    // local frontend
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: function(origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true); 
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true); // allow this origin
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
 
 app.use(express.json());
 
